@@ -10,24 +10,17 @@ gpio.setup(relay, gpio.OUT)
 
 def start():
     setRelayClosed()
-    try:
-        while True:
-            if isInternetConnected() == True:
-                print("Internet connection established")
-                time.sleep(15)
-            else:
-                print("Internet connection failed, toggling relay")
-                writeLog()
-                setRelayOpen()
-                time.sleep(20)
-                setRelayClosed()
-                time.sleep(120)
-            
-    except KeyboardInterrupt:
-        print
-        
-    finally:
-        gpio.cleanup()
+    while True:
+        if isInternetConnected() == True:
+            print("Internet connection established")
+            time.sleep(15)
+        else:
+            print("Internet connection failed, toggling relay")
+            writeLog()
+            setRelayOpen()
+            time.sleep(20)
+            setRelayClosed()
+            time.sleep(240)
 
 def isInternetConnected():
     try:
