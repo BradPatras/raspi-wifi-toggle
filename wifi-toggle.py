@@ -12,10 +12,8 @@ def start():
     setRelayClosed()
     while True:
         if isInternetConnected() == True:
-            print("Internet connection established")
             time.sleep(15)
         else:
-            print("Internet connection failed, toggling relay")
             writeLog()
             setRelayOpen()
             time.sleep(20)
@@ -26,18 +24,16 @@ def isInternetConnected():
     try:
         socket.create_connection(("www.google.com", 443))
         return True
-    except OSError:
+    except socket.error:
         pass
     return False
 
 def setRelayClosed():
     if gpio.input(relay) != gpio.HIGH:
-        print("Relay closing circuit")
         gpio.output(relay, gpio.HIGH)
 
 def setRelayOpen():
     if gpio.input(relay) != gpio.LOW:
-        print("Relay opening circuit")
         gpio.output(relay, gpio.LOW)
    
 def writeLog():
