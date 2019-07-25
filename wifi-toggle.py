@@ -5,6 +5,10 @@ import datetime
 
 relay = 37
 
+routerRebootWaitTime = 60 * 10
+routerPowerOffWaitTime = 20
+networkCheckInterval = 15
+
 gpio.setmode(gpio.BOARD)
 gpio.setup(relay, gpio.OUT)
 
@@ -12,13 +16,13 @@ def start():
     setRelayClosed()
     while True:
         if isInternetConnected() == True:
-            time.sleep(15)
+            time.sleep(networkCheckInterval)
         else:
             writeLog()
             setRelayOpen()
-            time.sleep(20)
+            time.sleep(routerPowerOffWaitTime)
             setRelayClosed()
-            time.sleep(240)
+            time.sleep(routerRebootWaitTime)
 
 def isInternetConnected():
     try:
